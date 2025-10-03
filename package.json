@@ -2,14 +2,16 @@
   "name": "kdb-csv",
   "displayName": "kdb.csv",
   "description": "Custom csv features in vscode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onLanguage:csv"],
+  "activationEvents": [
+    "onLanguage:csv"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "languages": [
@@ -21,6 +23,13 @@
         "extensions": [
           ".csv"
         ]
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "kdbCsv.onKeyPressEnter",
+        "key": "shift+enter",
+        "when": "editorTextFocus && resourceLangId == csv && !vim.mode || editorTextFocus && resourceLangId == csv && vim.mode == 'Insert'"
       }
     ]
   },
