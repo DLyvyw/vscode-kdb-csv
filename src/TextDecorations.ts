@@ -119,7 +119,7 @@ export function updateCsvDecorations(editor: vscode.TextEditor | undefined) {
             csvDecorations[colorIdx].push({ range: range, hoverMessage: headers[entryIndex] });
             entryIndex++;
             if (quotedString) {
-                let formatTextRegex = /((\*|_|-|\+)\2?)(?!(\s|\*))((?:[\s*]*(?:\\[\\*]|[^\\\s*]))+?)\1/gm;
+                let formatTextRegex = /(?<!\w)(\*|_|-|\+).*?(\1)(?!\w)/gm;
                 let formatTextMatch;
                 while ((formatTextMatch = formatTextRegex.exec(csvMatch[0]))) {
                     const formatTextStartPos = editor.document.positionAt(
@@ -129,12 +129,12 @@ export function updateCsvDecorations(editor: vscode.TextEditor | undefined) {
                         csvMatch.index + formatTextMatch.index + formatTextMatch[0].length
                     );
 
-                    if (formatTextMatch[1] === "**" || formatTextMatch[1] === "__") {
+                    if (formatTextMatch[1] === "*" ) {
                         formatDecorations[0].push({
                             range: new vscode.Range(formatTextStartPos, formatTextEndPos)
                         });
                     }
-                    else if (formatTextMatch[1] === "*" || formatTextMatch[1] === "_") {
+                    else if (formatTextMatch[1] === "_") {
                         formatDecorations[1].push({
                             range: new vscode.Range(formatTextStartPos, formatTextEndPos)
                         });
